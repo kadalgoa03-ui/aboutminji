@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Library of Memory</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Gabungan Font Aesthetic: Outfit, Playfair Display, dan Press Start 2P -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0" rel="stylesheet" />
+</head>
+<body>
+
+    <div class="app-slider" id="app-slider">
+
+        <!-- ================= HALAMAN 1 (ABOUT YOU) ================= -->
+        <section class="page" id="page-1">
+            <div class="film-container">
+                <div id="film-bg"></div>
+            </div>
+            
+            <div class="overlay-dark"></div>
+            
+            <div id="chat-container"></div>
+        
+            <div id="player-card" class="player-card dark-card">
+                <div class="cover-wrapper">
+                    <img src="album.jpg" alt="Album Cover" class="player-cover">
+                    <div class="shimmer"></div>
+                </div>
+                
+                <div class="ui-elements">
+                    <div class="track-info">
+                        <h2>About You</h2>
+                        <p>The 1975</p>
+                    </div>
+                    <div class="progress-container">
+                        <span class="time" id="current-time">0:00</span>
+                        <div class="progress-bar">
+                            <div class="progress" id="progress-bar-fill"></div>
+                        </div>
+                        <span class="time" id="duration-time">-1:00</span>
+                    </div>
+                    <div class="controls">
+                        <span class="material-symbols-outlined icon-btn icon-small">volume_up</span>
+                        <span class="material-symbols-outlined icon-btn icon-mid">skip_previous</span>
+                        <button id="play-btn" class="play-circle">
+                            <span id="play-icon" class="material-symbols-outlined icon-play">play_arrow</span>
+                        </button>
+                        <span class="material-symbols-outlined icon-btn icon-mid">skip_next</span>
+                        <span class="material-symbols-outlined icon-btn icon-small">favorite_border</span>
+                    </div>
+                    <button id="letter-btn" class="letter-btn hidden">
+                        💌 Open
+                    </button>
+                </div>
+            </div>
+        
+            <div id="letter-modal" class="letter-modal hidden">
+                <div class="letter-content">
+                    <button id="close-letter" class="material-symbols-rounded">close</button>
+                    <div class="letter-inner">
+                        <h3>About U 💌</h3>
+                        <p>When you're not around, everything feels a little less bright. I just wanted to remind you how special you are.</p>
+                        <p class="disclaimer"><i>(ps: this little website was made just for fun to make you smile! ✨)</i></p>
+                    </div>
+                </div>
+            </div>
+        
+            <div id="credit-wrapper" class="credit-wrapper">
+                <span id="credit-text"></span><span class="cursor">|</span>
+            </div>
+        
+
+        
+            <div id="frame-1" class="slideshow-container hidden">
+                <div class="landscape-frame">
+                    <div id="img-1" class="puzzle-wrapper"></div>
+                    <div class="shimmer-frame"></div> 
+                </div>
+                <div id="lyric-1" class="lyric"></div>
+            </div>
+        
+            <div id="frame-2" class="slideshow-container hidden">
+                <div class="landscape-frame">
+                    <div id="img-2" class="puzzle-wrapper"></div>
+                    <div class="shimmer-frame"></div> 
+                </div>
+                <div id="lyric-2" class="lyric"></div>
+            </div>
+        
+            <div id="effects-layer">
+                <div class="grain-overlay"></div>
+                <div class="light-vignette"></div>
+                <div class="particles"></div>
+            </div>
+        
+            <audio id="audio-player" src="lagu.mp3"></audio>
+            
+            <div class="swipe-hint">
+                <span>Geser Kiri</span>
+                <span class="material-symbols-outlined">arrow_forward_ios</span>
+            </div>
+        </section>
+
+
+        <!-- ================= HALAMAN 2 (RUMAH ITU) ================= -->
+        <section class="page pastel-page" id="page-2">
+            
+            <!-- WADAH BLUR -->
+            <div id="page-2-blur-wrapper">
+                
+                <div class="paper-texture"></div>
+                <div class="pastel-overlay"></div>
+
+                <!-- WADAH ROLL: Tengah, Rapat, Memenuhi Layar -->
+                <div class="rolls-container">
+                    
+                    <!-- ROLL 1: ATAS (KHUSUS FOTO) -->
+                    <div class="roll-wrapper pulse-effect">
+                        <div class="roll-track rtl-track" id="track-top">
+                            <img src="foto1.jpg" class="media-item" onclick="openLightbox(this, 'img')">
+                            <img src="foto2.jpg" class="media-item" onclick="openLightbox(this, 'img')">
+                            <img src="foto3.jpg" class="media-item" onclick="openLightbox(this, 'img')">
+                            <img src="foto4.jpg" class="media-item" onclick="openLightbox(this, 'img')">
+                            <img src="foto5.jpg" class="media-item" onclick="openLightbox(this, 'img')">
+                            <img src="foto6.jpg" class="media-item" onclick="openLightbox(this, 'img')">
+                            <img src="foto7.jpg" class="media-item" onclick="openLightbox(this, 'img')">
+                            <img src="foto8.jpg" class="media-item" onclick="openLightbox(this, 'img')">
+                            <img src="foto9.jpg" class="media-item" onclick="openLightbox(this, 'img')">
+                            <img src="foto10.jpg" class="media-item" onclick="openLightbox(this, 'img')">
+                            <img src="foto1.jpg" class="media-item" onclick="openLightbox(this, 'img')">
+                            <img src="foto2.jpg" class="media-item" onclick="openLightbox(this, 'img')">
+                            <img src="foto3.jpg" class="media-item" onclick="openLightbox(this, 'img')">
+                            <img src="foto4.jpg" class="media-item" onclick="openLightbox(this, 'img')">
+                            <img src="foto5.jpg" class="media-item" onclick="openLightbox(this, 'img')">
+                            <img src="foto6.jpg" class="media-item" onclick="openLightbox(this, 'img')">
+                            <img src="foto7.jpg" class="media-item" onclick="openLightbox(this, 'img')">
+                            <img src="foto8.jpg" class="media-item" onclick="openLightbox(this, 'img')">
+                            <img src="foto9.jpg" class="media-item" onclick="openLightbox(this, 'img')">
+                            <img src="foto10.jpg" class="media-item" onclick="openLightbox(this, 'img')">
+                        </div>
+                    </div>
+
+                    <!-- ROLL 2: BAWAH (KHUSUS VIDEO) -->
+                    <div class="roll-wrapper pulse-effect">
+                        <div class="roll-track ltr-track" id="track-bottom">
+                            <video src="vid1.mp4" autoplay loop muted playsinline preload="metadata" class="media-item roll-video" onclick="openLightbox(this, 'video')"></video>
+                            <video src="vid2.mp4" autoplay loop muted playsinline preload="metadata" class="media-item roll-video" onclick="openLightbox(this, 'video')"></video>
+                            <video src="vid3.mp4" autoplay loop muted playsinline preload="metadata" class="media-item roll-video" onclick="openLightbox(this, 'video')"></video>
+                            <video src="vid4.mp4" autoplay loop muted playsinline preload="metadata" class="media-item roll-video" onclick="openLightbox(this, 'video')"></video>
+                            <video src="vid5.mp4" autoplay loop muted playsinline preload="metadata" class="media-item roll-video" onclick="openLightbox(this, 'video')"></video>
+                            <video src="vid6.mp4" autoplay loop muted playsinline preload="metadata" class="media-item roll-video" onclick="openLightbox(this, 'video')"></video>
+                            <video src="vid7.mp4" autoplay loop muted playsinline preload="metadata" class="media-item roll-video" onclick="openLightbox(this, 'video')"></video>
+                            <video src="vid8.mp4" autoplay loop muted playsinline preload="metadata" class="media-item roll-video" onclick="openLightbox(this, 'video')"></video>
+                            <video src="vid9.mp4" autoplay loop muted playsinline preload="metadata" class="media-item roll-video" onclick="openLightbox(this, 'video')"></video>
+                            <video src="vid10.mp4" autoplay loop muted playsinline preload="metadata" class="media-item roll-video" onclick="openLightbox(this, 'video')"></video>
+                            <video src="vid11.mp4" autoplay loop muted playsinline preload="metadata" class="media-item roll-video" onclick="openLightbox(this, 'video')"></video>
+                            <video src="vid12.mp4" autoplay loop muted playsinline preload="metadata" class="media-item roll-video" onclick="openLightbox(this, 'video')"></video>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- AKHIR WADAH BLUR -->
+
+            <div class="bg-blur-overlay"></div>
+
+            <!-- ANIMASI KEJAR-KEJARAN PACMAN -->
+            <div id="chase-wrapper" class="chase-wrapper">
+                <img src="pacman1.gif" class="chase-item" alt="Pacman 1">
+                <img src="pacman2.gif" class="chase-item" alt="Pacman 2">
+            </div>
+
+            <!-- JUDUL ANIMASI RETRO ARCADE -->
+            <div id="lom-retro-title" class="lom-retro-title" style="display: none;">
+                <div id="text-library"></div>
+                <div id="text-of"></div>
+                <div id="text-memory"></div>
+            </div>
+
+            <!-- PLAYER CARD -->
+            <div id="player-card-2" class="player-card light-card">
+                <div class="cover-wrapper">
+                    <img src="album2.jpg" alt="Album Cover 2" class="player-cover">
+                    <div class="crayon-overlay"></div> 
+                </div>
+                
+                <div class="ui-elements">
+                    <div class="track-info">
+                        <h2>Kita Usahakan Rumah Itu</h2>
+                        <p>Sal Priadi</p>
+                    </div>
+                    <div class="progress-container">
+                        <span class="time" id="current-time-2">0:00</span>
+                        <div class="progress-bar light-progress-bar">
+                            <div class="progress light-progress" id="progress-bar-fill-2"></div>
+                        </div>
+                        <span class="time" id="duration-time-2">-3:32</span>
+                    </div>
+                    <div class="controls">
+                        <span class="material-symbols-outlined icon-btn icon-small">volume_up</span>
+                        <span class="material-symbols-outlined icon-btn icon-mid">skip_previous</span>
+                        <button id="play-btn-2" class="play-circle dark-circle">
+                            <span id="play-icon-2" class="material-symbols-outlined icon-play-light">play_arrow</span>
+                        </button>
+                        <span class="material-symbols-outlined icon-btn icon-mid">skip_next</span>
+                        <span class="material-symbols-outlined icon-btn icon-small">favorite_border</span>
+                    </div>
+                </div>
+            </div>
+
+            <audio id="audio-player-2" src="lagu2.mp3"></audio>
+            
+            <div class="swipe-hint-left">
+                <span class="material-symbols-outlined">arrow_back_ios</span>
+                <span>Kembali</span>
+            </div>
+            
+        </section>
+
+    </div>
+
+    <!-- LIGHTBOX UNTUK POP-UP FOTO/VIDEO -->
+    <div id="lightbox" class="lightbox hidden">
+        <div class="lightbox-close" onclick="closeLightbox()">
+            <span class="material-symbols-outlined">close</span>
+        </div>
+        <div class="lightbox-frame">
+            <div class="lightbox-content-wrapper">
+                <img id="lb-img" src="" class="hidden">
+                <video id="lb-vid" src="" controls playsinline class="hidden"></video>
+            </div>
+            <div class="lightbox-shimmer"></div>
+        </div>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+</html>

@@ -1,0 +1,1242 @@
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+}
+.hidden { display: none !important; }
+
+/* --- KURSOR RETRO KUSTOM --- */
+body, html { 
+    width: 100vw; 
+    height: 100vh; 
+    overflow: hidden; 
+    background-color: #050505; 
+    font-family: 'Outfit', sans-serif; 
+    touch-action: pan-x pan-y; 
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cpolygon points='3,3 3,21 9,15 15,25 18,23 12,13 21,13' fill='%23FF8C00' stroke='%23000' stroke-width='2'/%3E%3C/svg%3E") 3 3, auto;
+}
+
+a, button, .media-item, .icon-btn, .play-circle, .lightbox-close, .swipe-hint, .swipe-hint-left {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 24 24'%3E%3Cpath d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' fill='%23ff0044' stroke='%23000' stroke-width='2'/%3E%3C/svg%3E") 14 14, pointer !important;
+}
+
+/* --- SETUP SLIDER --- */
+.app-slider { 
+    display: flex; 
+    width: 100vw; 
+    height: 100vh; 
+    overflow-x: auto; 
+    overflow-y: hidden; 
+    scroll-snap-type: x mandatory; 
+    scroll-behavior: smooth; 
+    scrollbar-width: none; 
+    -ms-overflow-style: none; 
+}
+
+.app-slider::-webkit-scrollbar { 
+    display: none; 
+}
+
+.page { 
+    width: 100vw; 
+    height: 100vh; 
+    flex-shrink: 0; 
+    scroll-snap-align: center; 
+    position: relative; 
+    overflow: hidden; 
+    transform: translateZ(0); 
+}
+
+/* --- TEMA 2: CRAYON / PASTEL --- */
+.pastel-page { 
+    background-color: #faf3e0; 
+    color: #333; 
+    position: relative; 
+    background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+        url('background.jpg');
+    background-size: 25px 25px, 25px 25px, cover; 
+    background-position: center, center, center;
+    background-repeat: repeat, repeat, no-repeat;
+}
+
+#page-2-blur-wrapper {
+    position: absolute;
+    top: -10%;
+    left: -10%;
+    width: 120%;
+    height: 120%;
+    filter: blur(15px); 
+    transition: filter 1s ease-in-out;
+    z-index: 5;
+}
+
+.pastel-page.is-playing #page-2-blur-wrapper {
+    filter: blur(0px);
+}
+
+.paper-texture { 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"); 
+    opacity: 0.12; 
+    mix-blend-mode: multiply; 
+    pointer-events: none; 
+    z-index: 1; 
+}
+
+.pastel-overlay { 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    background: radial-gradient(circle at 50% 50%, transparent 40%, rgba(255, 230, 200, 0.4) 100%); 
+    pointer-events: none; 
+    z-index: 2; 
+}
+
+.bg-blur-overlay {
+    position: absolute;
+    top: -10%;
+    left: -10%;
+    width: 120%;
+    height: 120%;
+    background-color: rgba(253, 250, 246, 0.05); 
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    z-index: 30; 
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 1s ease-in-out;
+}
+
+.pastel-page.is-playing .bg-blur-overlay {
+    opacity: 0;
+}
+
+
+/* --- ANIMASI JUDUL RETRO ARCADE --- */
+.lom-retro-title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    z-index: 45; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Press Start 2P', cursive;
+    text-align: center;
+    gap: 15px;
+    line-height: 1.5;
+    transition: opacity 2s ease-in-out, transform 2s ease-in-out;
+}
+
+.lom-retro-title.sparkle-active {
+    animation: retroSparkle 0.8s ease-in-out infinite alternate;
+}
+
+@keyframes retroSparkle {
+    0% { filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.5)); }
+    100% { filter: drop-shadow(0 0 15px #FFF) drop-shadow(0 0 30px #FFE600); }
+}
+
+.lom-retro-title.fade-out {
+    opacity: 0 !important;
+    transform: translate(-50%, -60%) scale(0.9);
+}
+
+#text-library { 
+    font-size: 28px; 
+    color: #FFF; 
+    text-shadow: 4px 4px 0px #000; 
+}
+
+#text-of { 
+    font-size: 16px; 
+    color: #FFF; 
+    text-shadow: 2px 2px 0px #000; 
+    opacity: 0; 
+}
+
+#text-memory { 
+    font-size: 32px; 
+    color: #FFE600; 
+    text-shadow: 4px 4px 0px #000; 
+}
+
+
+/* --- ANIMASI KEJAR-KEJARAN PACMAN --- */
+.chase-wrapper {
+    position: absolute;
+    top: 45%; 
+    left: -300px;
+    z-index: 45; 
+    pointer-events: none;
+    display: none; 
+    align-items: center;
+    gap: 30px;
+}
+
+.chase-wrapper.active {
+    display: flex; 
+    animation: chaseRoam 14s linear infinite;
+}
+
+.chase-item {
+    height: 70px; 
+    width: auto;
+    object-fit: contain;
+}
+
+@keyframes chaseRoam {
+    0% { transform: translateX(0) scaleX(1); }
+    49.9% { transform: translateX(calc(100vw + 600px)) scaleX(1); }
+    50% { transform: translateX(calc(100vw + 600px)) scaleX(-1); }
+    99.9% { transform: translateX(-100px) scaleX(-1); }
+    100% { transform: translateX(-100px) scaleX(1); }
+}
+
+
+/* --- TATA LETAK ROLL FILM --- */
+.rolls-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    gap: 3vh; 
+}
+
+.roll-wrapper {
+    position: relative; 
+    width: 100%;
+    overflow: hidden;
+    z-index: 10; 
+    padding: 2.5vh 0; 
+    background: #FF8C00; 
+    border-top: 5px solid #000; 
+    border-bottom: 5px solid #000;
+    box-shadow: 0 10px 0px rgba(0,0,0,1); 
+    border-radius: 0; 
+}
+
+.pulse-effect {
+    animation: pulseRoll 4s ease-in-out infinite alternate;
+}
+
+@keyframes pulseRoll {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.02); }
+}
+
+.roll-track {
+    display: flex;
+    gap: 20px;
+    width: max-content; 
+    padding: 0 10px;
+}
+
+.rtl-track {
+    animation: scrollRTL 60s linear infinite;
+}
+
+.ltr-track {
+    animation: scrollLTR 60s linear infinite;
+}
+
+@keyframes scrollRTL {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); } 
+}
+
+@keyframes scrollLTR {
+    0% { transform: translateX(-50%); } 
+    100% { transform: translateX(0); }
+}
+
+.media-item {
+    height: 38vh; 
+    aspect-ratio: 3 / 4; 
+    object-fit: cover; 
+    border-radius: 0px; 
+    border: 4px solid #000; 
+    box-shadow: 6px 6px 0px #000; 
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.media-item:hover {
+    transform: translate(-4px, -4px); 
+    box-shadow: 10px 10px 0px #000;
+}
+
+.media-item:active, .icon-btn:active, .lightbox-close:active {
+    transform: translate(2px, 2px) !important;
+    box-shadow: 2px 2px 0px #000 !important;
+}
+
+
+/* --- LIGHTBOX --- */
+.lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(5px);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+    transition: opacity 0.4s ease;
+}
+
+.lightbox.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    color: #fff;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background 0.3s ease, transform 0.2s ease;
+    z-index: 10001;
+}
+
+.lightbox-close:hover {
+    background: rgba(255,255,255,0.5);
+}
+
+.lightbox-frame {
+    position: relative;
+    background: #fff;
+    padding: 15px;
+    padding-bottom: 40px; 
+    border-radius: 0px;
+    border: 4px solid #000; 
+    box-shadow: 10px 10px 0px #000;
+    max-width: 90vw;
+    max-height: 80vh;
+    overflow: hidden; 
+}
+
+.lightbox-content-wrapper {
+    position: relative;
+    max-width: 100%;
+    max-height: calc(80vh - 55px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lightbox-content-wrapper img, 
+.lightbox-content-wrapper video {
+    max-width: 100%;
+    max-height: calc(80vh - 55px);
+    object-fit: contain;
+}
+
+.lightbox-content-wrapper .hidden {
+    display: none;
+}
+
+.lightbox-shimmer { 
+    position: absolute; 
+    top: 0; 
+    left: -150%; 
+    width: 50%; 
+    height: 100%; 
+    background: linear-gradient(to right, transparent, rgba(255,255,255,0.6), transparent); 
+    transform: skewX(-25deg); 
+    animation: sweepShineLightbox 4s infinite; 
+    pointer-events: none; 
+    z-index: 10000; 
+}
+
+@keyframes sweepShineLightbox { 
+    0% { left: -150%; } 
+    50%, 100% { left: 200%; } 
+}
+
+
+/* --- KARTU PLAYER --- */
+.player-card { 
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate3d(-50%, -50%, 0) scale(1); 
+    transform-origin: center center; 
+    width: 300px; 
+    padding: 20px; 
+    display: flex; 
+    flex-direction: column; 
+    transition: all 0.7s cubic-bezier(0.25, 1, 0.3, 1); 
+    z-index: 40; 
+    will-change: transform, width, height, bottom;
+}
+
+.cover-wrapper { 
+    position: relative; 
+    width: 100%; 
+    aspect-ratio: 1 / 1; 
+    border-radius: 12px; 
+    margin-bottom: 14px; 
+    overflow: hidden; 
+}
+
+.player-cover { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+}
+
+.dark-card { 
+    background-color: #121212; 
+    border-radius: 16px; 
+    box-shadow: 0 10px 40px rgba(0,0,0,0.8); 
+    color: #fff; 
+}
+
+/* --- KONSEP 1: FLOATING PILL BAR DI BAWAH TENGAH --- */
+.player-card.mini { 
+    top: auto !important; 
+    bottom: 25px !important; 
+    left: 50% !important; 
+    transform: translate3d(-50%, 0, 0) scale(1) !important; 
+    width: calc(100% - 40px) !important; 
+    max-width: 440px !important; 
+    height: 72px !important; 
+    padding: 10px 18px !important; 
+    border-radius: 50px !important; 
+    flex-direction: row !important; 
+    align-items: center !important; 
+    justify-content: space-between !important; 
+    z-index: 100 !important; 
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 20px rgba(255, 255, 255, 0.08) !important; 
+    backdrop-filter: blur(16px) !important; 
+    -webkit-backdrop-filter: blur(16px) !important; 
+}
+
+.dark-card.mini { 
+    background-color: rgba(18, 18, 20, 0.82) !important; 
+    border: 1px solid rgba(255, 255, 255, 0.18) !important; 
+    color: #fff !important; 
+}
+
+.shimmer { 
+    position: absolute; 
+    top: 0; 
+    left: -150%; 
+    width: 50%; 
+    height: 100%; 
+    background: linear-gradient(to right, transparent, rgba(255,255,255,0.4), transparent); 
+    transform: skewX(-25deg); 
+    animation: sweepShine 3.5s infinite; 
+    pointer-events: none; 
+    z-index: 2; 
+}
+
+@keyframes sweepShine { 
+    0% { left: -150%; } 
+    50%, 100% { left: 200%; } 
+}
+
+.light-card { 
+    background-color: #ffffff; 
+    border-radius: 24px 18px 28px 16px; 
+    border: 3px solid rgba(0,0,0,0.7); 
+    box-shadow: 6px 6px 0px rgba(0,0,0,0.15); 
+    color: #222; 
+}
+
+.light-card.mini { 
+    background-color: rgba(255, 255, 255, 0.92) !important; 
+    border: 2px solid rgba(0, 0, 0, 0.8) !important; 
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3), 4px 4px 0px rgba(0, 0, 0, 0.8) !important; 
+    color: #222 !important; 
+}
+
+.player-card.mini .cover-wrapper { 
+    width: 50px !important; 
+    height: 50px !important; 
+    min-width: 50px !important; 
+    margin-bottom: 0 !important; 
+    border-radius: 50% !important; 
+    overflow: hidden !important; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4) !important; 
+}
+
+.player-card.mini .player-cover { 
+    animation: spinVinyl 12s linear infinite !important; 
+}
+
+@keyframes spinVinyl { 
+    100% { transform: rotate(360deg); } 
+}
+
+.player-card.mini .ui-elements { 
+    display: flex !important; 
+    flex: 1 !important; 
+    align-items: center !important; 
+    justify-content: space-between !important; 
+    margin-left: 14px !important; 
+    width: auto !important; 
+}
+
+.player-card.mini .track-info { 
+    text-align: left !important; 
+    margin-bottom: 0 !important; 
+    max-width: 170px !important; 
+}
+
+.player-card.mini .track-info h2 { 
+    font-size: 14px !important; 
+    margin-bottom: 2px !important; 
+    white-space: nowrap !important; 
+    overflow: hidden !important; 
+    text-overflow: ellipsis !important; 
+}
+
+.player-card.mini .track-info p { 
+    font-size: 11px !important; 
+    margin-bottom: 0 !important; 
+    white-space: nowrap !important; 
+    overflow: hidden !important; 
+    text-overflow: ellipsis !important; 
+}
+
+.player-card.mini .progress-container { 
+    position: absolute !important; 
+    bottom: 2px !important; 
+    left: 25px !important; 
+    right: 25px !important; 
+    margin-bottom: 0 !important; 
+    width: auto !important; 
+}
+
+.player-card.mini .progress-container .time { 
+    display: none !important; 
+}
+
+.player-card.mini .progress-bar { 
+    height: 3px !important; 
+    margin: 0 !important; 
+}
+
+.player-card.mini .controls { 
+    gap: 8px !important; 
+}
+
+.player-card.mini .play-circle { 
+    width: 42px !important; 
+    height: 42px !important; 
+}
+
+.player-card.mini .icon-play, 
+.player-card.mini .icon-play-light { 
+    font-size: 26px !important; 
+}
+
+.player-card.mini .icon-small, 
+.player-card.mini .icon-mid { 
+    font-size: 20px !important; 
+}
+
+.light-card .track-info h2 { 
+    color: #222; 
+}
+
+.light-card .track-info p, 
+.light-card .time, 
+.light-card .icon-btn { 
+    color: #666; 
+}
+
+.light-card .icon-mid { 
+    color: #333; 
+}
+
+.light-progress-bar { 
+    background-color: #e0e0e0 !important; 
+    border-radius: 8px; 
+    height: 6px !important; 
+    border: 1px solid #aaa; 
+}
+
+.light-progress { 
+    background-color: #ff8b73 !important; 
+    border-radius: 6px; 
+}
+
+.dark-circle { 
+    background-color: #ffcc5c !important; 
+    border: 2px solid #333; 
+    box-shadow: 2px 2px 0px #333; 
+    transition: all 0.2s; 
+}
+
+.dark-circle:active { 
+    transform: translate(2px, 2px) !important; 
+    box-shadow: 0px 0px 0px #333 !important; 
+}
+
+.icon-play-light { 
+    color: #333 !important; 
+    font-size: 36px; 
+}
+
+.crayon-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.3;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.track-info h2 { 
+    font-size: 20px; 
+    font-weight: 700; 
+    margin-bottom: 4px; 
+}
+
+.track-info p { 
+    font-size: 14px; 
+    margin-bottom: 12px; 
+    color: #a3a3a3; 
+} 
+
+.progress-container { 
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+    margin-bottom: 16px; 
+}
+
+.time { 
+    font-size: 12px; 
+    color: #a3a3a3; 
+    width: 35px; 
+}
+
+.progress-bar { 
+    flex: 1; 
+    height: 4px; 
+    background-color: #333; 
+    margin: 0 12px; 
+    border-radius: 2px; 
+}
+
+.progress { 
+    width: 0%; 
+    height: 100%; 
+    background-color: #fff; 
+    border-radius: 2px; 
+    transition: width 0.2s linear; 
+}
+
+.controls { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+}
+
+.icon-small { 
+    font-size: 24px; 
+    color: #a3a3a3; 
+}
+
+.icon-mid { 
+    font-size: 36px; 
+    color: #fff; 
+}
+
+.play-circle { 
+    background-color: #fff; 
+    border: none; 
+    width: 64px; 
+    height: 64px; 
+    border-radius: 50%; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+}
+
+.icon-play { 
+    color: black; 
+    font-size: 36px; 
+}
+
+
+/* --- HALAMAN 1 --- */
+.film-container { 
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    width: 250%; 
+    height: 250%; 
+    transform: translate(-50%, -50%) rotate(-12deg); 
+    z-index: -2; 
+    pointer-events: none; 
+    animation: throbBlur 5s ease-in-out infinite alternate; 
+}
+
+@keyframes throbBlur { 
+    0% { filter: blur(0.5px) brightness(0.55); transform: translate(-50%, -50%) rotate(-12deg) scale(1); } 
+    100% { filter: blur(2px) brightness(0.85); transform: translate(-50%, -50%) rotate(-12deg) scale(1.02); } 
+}
+
+#film-bg { 
+    display: flex; 
+    flex-wrap: wrap; 
+    align-content: center; 
+    justify-content: center; 
+    gap: 15px; 
+    width: 100%; 
+    height: 100%; 
+    animation: scrollFilm 60s linear infinite; 
+}
+
+.bg-roll-img { 
+    width: 240px; 
+    height: 150px; 
+    object-fit: cover; 
+    border-radius: 8px; 
+    transition: all 0.8s ease; 
+    filter: grayscale(60%) brightness(0.7);
+}
+
+.bg-roll-img:hover {
+    filter: grayscale(0%) brightness(1);
+    transform: scale(1.05);
+}
+
+.active-roll-img { 
+    filter: grayscale(0%) brightness(1.1) drop-shadow(0 0 10px rgba(255, 255, 255, 0.4)) !important; 
+    transform: scale(1.15);
+    z-index: 10;
+    border: 2px solid rgba(255,255,255,0.7);
+}
+
+@keyframes scrollFilm { 
+    0% { transform: translateX(0); } 
+    100% { transform: translateX(-20%); } 
+}
+
+.overlay-dark { 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    right: 0; 
+    bottom: 0; 
+    background: radial-gradient(circle, rgba(15,15,20,0.2) 0%, rgba(5,5,5,0.95) 100%); 
+    z-index: -1; 
+}
+
+.credit-wrapper { 
+    position: absolute; 
+    bottom: 8%; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    font-family: 'Playfair Display', serif; 
+    font-style: italic;
+    font-size: 24px; 
+    color: rgba(255, 255, 255, 0.9); 
+    text-shadow: 0 0 12px rgba(255,255,255,0.6); 
+    z-index: 35; 
+    transition: opacity 0.8s ease; 
+    text-align: center; 
+    width: 100%; 
+}
+
+.credit-wrapper.hidden { 
+    opacity: 0; 
+    pointer-events: none; 
+}
+
+.cursor { 
+    animation: blink 1s infinite; 
+}
+
+@keyframes blink { 
+    0%, 100% { opacity: 1; } 
+    50% { opacity: 0; } 
+}
+
+.walking-gif { 
+    position: absolute; 
+    bottom: 2%; 
+    left: -100px; 
+    width: 60px; 
+    z-index: 35; 
+    animation: walkAcross 12s linear infinite; 
+    transition: opacity 0.8s ease; 
+}
+
+.walking-gif.hidden { 
+    opacity: 0; 
+    pointer-events: none; 
+}
+
+@keyframes walkAcross { 
+    0% { transform: translateX(0); } 
+    100% { transform: translateX(calc(100vw + 200px)); } 
+}
+
+.slideshow-container { 
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    width: 100%; 
+    max-width: 600px; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    gap: 30px; 
+    opacity: 0; 
+    visibility: hidden; 
+    pointer-events: none; 
+}
+
+.slideshow-container.hidden { 
+    visibility: hidden !important; 
+    opacity: 0 !important; 
+    animation: none !important; 
+}
+
+.first-entry { 
+    visibility: visible; 
+    z-index: 20; 
+    animation: ultraSlowEntry 10s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; 
+}
+
+@keyframes ultraSlowEntry { 
+    0% { opacity: 0; transform: translate(-50%, -35%) scale(0.65); } 
+    100% { opacity: 1; transform: translate(-50%, -50%) scale(1); } 
+}
+
+.track-out { 
+    visibility: visible; 
+    z-index: 20; 
+    animation: trackOutAnim 1.5s cubic-bezier(0.6, -0.05, 0.3, 1) forwards; 
+}
+
+@keyframes trackOutAnim { 
+    0% { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(0deg); } 
+    100% { opacity: 0; transform: translate(50vw, 100vh) scale(0.8) rotate(15deg); } 
+}
+
+.full-slide-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    animation: continuousBreath 15s ease-in-out infinite alternate;
+}
+
+@keyframes continuousBreath {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.15); }
+}
+
+/* 6 Variasi Transisi Keren, Aesthetic, dan Ringan (Full Hardware Accelerated) */
+.trans-fade-scale { visibility: visible; z-index: 25; animation: fadeScale 2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+@keyframes fadeScale { 
+    0% { opacity: 0; transform: translate(-50%, -50%) scale(1.15); } 
+    100% { opacity: 1; transform: translate(-50%, -50%) scale(1); } 
+}
+
+.trans-slide-up { visibility: visible; z-index: 25; animation: slideUp 2s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+@keyframes slideUp { 
+    0% { opacity: 0; transform: translate(-50%, -40%) scale(1.05); } 
+    100% { opacity: 1; transform: translate(-50%, -50%) scale(1); } 
+}
+
+.trans-slide-right { visibility: visible; z-index: 25; animation: slideRight 2s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+@keyframes slideRight { 
+    0% { opacity: 0; transform: translate(-60%, -50%); } 
+    100% { opacity: 1; transform: translate(-50%, -50%); } 
+}
+
+.trans-rotate-zoom { visibility: visible; z-index: 25; animation: rotateZoom 2.2s cubic-bezier(0.19, 1, 0.22, 1) forwards; }
+@keyframes rotateZoom { 
+    0% { opacity: 0; transform: translate(-50%, -50%) rotate(-3deg) scale(1.1); } 
+    100% { opacity: 1; transform: translate(-50%, -50%) rotate(0deg) scale(1); } 
+}
+
+.trans-spring-pop { visibility: visible; z-index: 25; animation: springPop 1.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+@keyframes springPop { 
+    0% { opacity: 0; transform: translate(-50%, -45%) scale(0.9); } 
+    100% { opacity: 1; transform: translate(-50%, -50%) scale(1); } 
+}
+
+.trans-float-down { visibility: visible; z-index: 25; animation: floatDown 2s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+@keyframes floatDown { 
+    0% { opacity: 0; transform: translate(-50%, -60%) scale(1.02); } 
+    100% { opacity: 1; transform: translate(-50%, -50%) scale(1); } 
+}
+
+.track-out {
+    visibility: visible;
+    z-index: 20;
+    animation: trackOutAnim 2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+@keyframes trackOutAnim {
+    0% { opacity: 1; transform: translate(-50%, -50%) scale(1); filter: blur(0); }
+    100% { opacity: 0; transform: translate(-50%, -50%) scale(0.95); filter: blur(10px); visibility: hidden; }
+}
+
+.track-out-fade {
+    visibility: visible;
+    z-index: 20;
+    animation: fadeOutAnim 3s ease forwards !important;
+}
+@keyframes fadeOutAnim {
+    0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    100% { opacity: 0; transform: translate(-50%, -50%) scale(0.9); visibility: hidden; }
+}
+
+.landscape-frame { 
+    width: 90%; 
+    aspect-ratio: 16 / 9; 
+    border-radius: 12px; 
+    overflow: hidden; 
+    position: relative; 
+    box-shadow: 0 20px 50px rgba(0,0,0,0.9); 
+}
+
+.puzzle-wrapper { 
+    width: 100%; 
+    height: 100%; 
+    position: relative; 
+}
+
+.puzzle-piece { 
+    position: absolute; 
+    background-repeat: no-repeat; 
+    opacity: 0; 
+    transform: scale(0.1) translate(100px, -100px) rotate(45deg); 
+    animation: assemblePuzzle 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; 
+}
+
+@keyframes assemblePuzzle { 
+    to { opacity: 1; transform: scale(1) translate(0, 0) rotate(0deg); } 
+}
+
+.shimmer-frame { 
+    position: absolute; 
+    top: 0; 
+    left: -150%; 
+    width: 50%; 
+    height: 100%; 
+    background: linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent); 
+    transform: skewX(-25deg); 
+    animation: sweepShine 5s infinite; 
+    pointer-events: none; 
+    z-index: 5; 
+}
+
+.lyric { 
+    font-family: 'Playfair Display', serif; 
+    font-style: italic;
+    font-size: 36px; 
+    color: #fff; 
+    text-align: center; 
+    padding: 0 20px; 
+    min-height: 50px; 
+    animation: lyricGlow 2.5s infinite alternate; 
+}
+
+@keyframes lyricGlow { 
+    0% { text-shadow: 0 0 5px rgba(255,255,255,0.4); } 
+    100% { text-shadow: 0 0 15px rgba(255,255,255,1), 0 0 25px rgba(255,255,255,0.8); } 
+}
+
+#chat-container, #effects-layer { 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    pointer-events: none; 
+    z-index: 15; 
+}
+
+#effects-layer { 
+    z-index: 30; 
+}
+
+.floating-chat { 
+    position: absolute; 
+    width: 300px; 
+    max-width: 80vw; 
+    opacity: 0; 
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.6)); 
+    animation: floatUpAnim 8s ease-in-out forwards, sparkleChat 1.5s infinite alternate; 
+}
+
+.chat-inner { 
+    position: relative; 
+    width: 100%; 
+    height: 100%; 
+    -webkit-mask-size: 100% 100%; 
+    mask-size: 100% 100%; 
+    -webkit-mask-repeat: no-repeat; 
+    mask-repeat: no-repeat; 
+}
+
+.chat-inner img { 
+    width: 100%; 
+    display: block; 
+}
+
+.chat-shimmer { 
+    position: absolute; 
+    top: 0; 
+    left: -150%; 
+    width: 50%; 
+    height: 100%; 
+    background: linear-gradient(to right, transparent, rgba(255,255,255,0.65), transparent); 
+    transform: skewX(-25deg); 
+    animation: sweepShineChat 4s infinite; 
+    pointer-events: none; 
+    z-index: 2; 
+}
+
+@keyframes sweepShineChat { 
+    0% { left: -150%; } 
+    50%, 100% { left: 200%; } 
+}
+
+@keyframes floatUpAnim { 
+    0% { transform: translateY(50px) scale(0.8) var(--rot); opacity: 0; } 
+    15% { opacity: 1; transform: translateY(0) scale(1) var(--rot); } 
+    85% { opacity: 1; transform: translateY(-40px) scale(1) var(--rot); } 
+    100% { transform: translateY(-80px) scale(0.9) var(--rot); opacity: 0; } 
+}
+
+@keyframes sparkleChat { 
+    0% { filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3)) brightness(1); } 
+    100% { filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.8)) brightness(1.15); } 
+}
+
+.grain-overlay { 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    pointer-events: none;
+}
+
+/* ============================================
+   OPTIMASI AKSELERASI GPU & RESPONSIVE HP (MOBILE)
+   ============================================ */
+
+/* Akselerasi Hardware GPU */
+.roll-track, 
+.bg-roll-img, 
+.media-item, 
+.puzzle-piece {
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+/* Penyesuaian Khusus Layar HP (Mobile Optimization) */
+@media (max-width: 768px) {
+    /* Player Card di HP */
+    .player-card {
+        width: 88vw;
+        max-width: 320px;
+        padding: 16px;
+    }
+
+    /* Floating Pill Bar versi HP */
+    .player-card.mini {
+        bottom: 15px !important;
+        width: 92vw !important;
+        max-width: 360px !important;
+        height: 62px !important;
+        padding: 6px 12px !important;
+    }
+
+    .player-card.mini .cover-wrapper {
+        width: 42px !important;
+        height: 42px !important;
+        min-width: 42px !important;
+    }
+
+    .player-card.mini .track-info h2 {
+        font-size: 13px !important;
+        max-width: 130px !important;
+    }
+
+    .player-card.mini .track-info p {
+        font-size: 10px !important;
+        max-width: 130px !important;
+    }
+
+    .player-card.mini .play-circle {
+        width: 36px !important;
+        height: 36px !important;
+    }
+
+    .player-card.mini .icon-play,
+    .player-card.mini .icon-play-light {
+        font-size: 22px !important;
+    }
+
+    .player-card.mini .icon-small,
+    .player-card.mini .icon-mid {
+        font-size: 18px !important;
+    }
+
+    /* Media Roll di Halaman 2 untuk HP */
+    .media-item {
+        height: 26vh;
+    }
+
+    .rolls-container {
+        gap: 2vh;
+    }
+
+    /* Teks Judul Retro Arcade di HP */
+    #text-library { font-size: 20px; }
+    #text-of { font-size: 12px; }
+    #text-memory { font-size: 24px; }
+
+    /* Pengurangan Efek Berat di HP untuk Menjaga 60 FPS */
+    .grain-overlay, .paper-texture, .crayon-overlay {
+        display: none !important; /* Matikan SVG turbulence heavy filter di HP agar sangat lancar */
+    }
+
+    .pastel-page #page-2-blur-wrapper {
+        filter: blur(8px); /* Kurangi radius blur berat di HP */
+    }
+
+    .landscape-frame {
+        width: 95%;
+    }
+
+    .lyric {
+        font-size: 1.1rem;
+        padding: 0 10px;
+    }
+}
+
+/* LETTER BUTTON & MODAL */
+.letter-btn {
+    margin: 15px auto 0 auto;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: white;
+    padding: 10px 24px;
+    border-radius: 30px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s;
+    backdrop-filter: blur(8px);
+    width: fit-content;
+}
+.letter-btn:hover {
+    background: rgba(255,255,255,0.25);
+    transform: translateY(-2px);
+}
+
+.letter-modal {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(10px);
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.5s;
+    pointer-events: none;
+}
+.letter-modal.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.letter-content {
+    background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
+    padding: 30px;
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    max-width: 85%;
+    width: 340px;
+    text-align: center;
+    position: relative;
+    transform: scale(0.8) translateY(20px);
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.letter-modal.show .letter-content {
+    transform: scale(1) translateY(0);
+}
+
+#close-letter {
+    position: absolute;
+    top: 10px; right: 10px;
+    background: none; border: none;
+    color: rgba(255,255,255,0.5);
+    font-size: 24px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+#close-letter:hover {
+    color: white;
+}
+
+.letter-inner h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #ffd700;
+}
+.letter-inner p {
+    font-family: 'Outfit', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #e0e0e0;
+    margin-bottom: 10px;
+}
+.letter-inner .disclaimer {
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+    margin-top: 20px;
+}
