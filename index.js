@@ -399,7 +399,6 @@ playBtn.addEventListener("click", () => {
             frame2.classList.remove("track-out-fade");
 
             creditWrapper.classList.add("hidden");
-            walkingGif.classList.add("hidden");
 
             audio.play();
             playIcon.textContent = "pause";
