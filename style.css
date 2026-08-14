@@ -420,7 +420,7 @@ a, button, .media-item, .icon-btn, .play-circle, .lightbox-close, .swipe-hint, .
 /* --- KONSEP 1: FLOATING PILL BAR DI BAWAH TENGAH --- */
 .player-card.mini { 
     top: auto !important; 
-    bottom: 25px !important; 
+    bottom: calc(25px + env(safe-area-inset-bottom, 15px)) !important; 
     left: 50% !important; 
     transform: translate3d(-50%, 0, 0) scale(1) !important; 
     width: calc(100% - 40px) !important; 
@@ -430,11 +430,21 @@ a, button, .media-item, .icon-btn, .play-circle, .lightbox-close, .swipe-hint, .
     border-radius: 50px !important; 
     flex-direction: row !important; 
     align-items: center !important; 
-    justify-content: space-between !important; 
+    justify-content: space-between !important;
     z-index: 100 !important; 
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 20px rgba(255, 255, 255, 0.08) !important; 
     backdrop-filter: blur(16px) !important; 
     -webkit-backdrop-filter: blur(16px) !important; 
+}
+
+.full-slide-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 .dark-card.mini { 
