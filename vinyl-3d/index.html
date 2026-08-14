@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>About You — 3D Vinyl Experience</title>
+    <meta name="description" content="3D Interactive Vinyl Record & Memories Showcase for Minji">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,400;1,600&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Google Material Symbols -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
+
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Three.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+
+    <!-- 3D Canvas Background Container -->
+    <div id="webgl-container"></div>
+
+    <!-- Retro Ambient Room Elements -->
+    <div class="ambient-glow orb-pink"></div>
+    <div class="ambient-glow orb-blue"></div>
+
+    <!-- UI Overlay Layer -->
+    <div class="app-ui">
+        
+        <!-- Top Navigation / Header Badge -->
+        <header class="top-nav">
+            <div class="brand-pill">
+                <span class="live-indicator"></span>
+                <span class="brand-title">MINJI • 3D ARCHIVE</span>
+            </div>
+            <div class="interact-hint">
+                <span class="material-symbols-outlined hint-icon">touch_app</span>
+                <span>Drag to Rotate 3D</span>
+            </div>
+        </header>
+
+        <!-- Dynamic Holographic Photo Frame -->
+        <div id="hologram-frame-container" class="hologram-frame-wrapper hidden">
+            <div class="photo-card-glass">
+                <div class="photo-inner-wrapper">
+                    <img id="current-slide-img" src="foto1.jpg" alt="Memory Slide" class="slide-img">
+                    
+                    <!-- Retro Camcorder / Hologram Overlay -->
+                    <div class="card-hud">
+                        <div class="hud-top">
+                            <span class="hud-rec"><span class="rec-dot"></span> LIVE 3D</span>
+                            <span class="hud-tag">MEMORIES // '26</span>
+                        </div>
+                        <div class="hud-brackets">
+                            <span class="b-tl"></span><span class="b-tr"></span>
+                            <span class="b-bl"></span><span class="b-br"></span>
+                        </div>
+                        <div class="hud-bottom">
+                            <span class="hud-title">THE 1975 — ABOUT YOU</span>
+                            <span id="hud-photo-counter" class="hud-counter">01 / 10</span>
+                        </div>
+                    </div>
+
+                    <!-- Ambient Shimmer & Light Sweep -->
+                    <div class="card-shimmer"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Synced Lyrics Display -->
+        <div class="lyrics-container">
+            <p id="live-lyric" class="lyric-text">Press Play to begin...</p>
+        </div>
+
+        <!-- Glassmorphism Floating Music Controller -->
+        <div id="player-controller" class="player-controller glass-panel">
+            <div class="controller-left">
+                <div class="cover-disc-wrap">
+                    <img src="album.jpg" alt="Album Art" class="mini-album-cover" id="mini-cover">
+                    <div class="disc-hole"></div>
+                </div>
+                <div class="track-meta">
+                    <div class="track-title-group">
+                        <h1 class="track-name">About You</h1>
+                        <div class="live-wave" id="live-wave">
+                            <span></span><span></span><span></span><span></span>
+                        </div>
+                    </div>
+                    <p class="track-artist">The 1975</p>
+                </div>
+            </div>
+
+            <!-- Progress Bar Container -->
+            <div class="controller-center">
+                <div class="progress-bar-wrap" id="seek-bar-wrap">
+                    <span class="time-label" id="time-current">0:00</span>
+                    <div class="progress-track">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                    <span class="time-label" id="time-duration">-1:00</span>
+                </div>
+            </div>
+
+            <!-- Action Controls -->
+            <div class="controller-right">
+                <button id="btn-replay-seek" class="icon-btn" title="Restart">
+                    <span class="material-symbols-outlined">skip_previous</span>
+                </button>
+                <button id="btn-play-pause" class="play-btn-glow" title="Play / Pause">
+                    <span id="play-btn-icon" class="material-symbols-outlined">play_arrow</span>
+                </button>
+                <button id="btn-fav" class="icon-btn heart-btn" title="Love">
+                    <span class="material-symbols-outlined">favorite</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Final Romantic Letter Button (Appears when track finishes) -->
+        <div id="final-action-container" class="final-action-wrap hidden">
+            <button id="btn-open-letter" class="btn-glass-letter">
+                <span class="letter-emoji">💌</span>
+                <span>Open Special Letter</span>
+            </button>
+        </div>
+
+        <!-- Romantic Letter Modal Popup -->
+        <div id="letter-modal" class="letter-modal-backdrop hidden">
+            <div class="letter-modal-box">
+                <button id="btn-close-letter" class="close-modal-btn">
+                    <span class="material-symbols-rounded">close</span>
+                </button>
+                <div class="letter-body">
+                    <div class="letter-stamp">💌</div>
+                    <h2 class="letter-title">About You, Always ✨</h2>
+                    <p class="letter-msg">
+                        "Do you think I have forgotten about you?"<br><br>
+                        Every memory, every smile, and every little moment you shared shines like a star in this universe. You are truly one of a kind.
+                    </p>
+                    <div class="letter-footer">
+                        <p class="letter-author">Created with love by Husni</p>
+                        <p class="letter-disclaimer"><i>(Made just for fun to make your day brighter! 🌸)</i></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Audio Source -->
+        <audio id="audio-source" src="lagu.mp3" preload="auto"></audio>
+
+    </div>
+
+    <!-- Main 3D & Logic Application Script -->
+    <script src="app.js"></script>
+</body>
+</html>
